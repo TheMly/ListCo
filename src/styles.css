@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
+
+.topnav a:hover {
+  border-bottom: 3px solid red;
+}
+
+/* ------- GENERAL ------- */
+body {
+  font-family: 'Quicksand';
+  background-color: #1F2833;
+}
+
+/* ------- NAVBAR ------- */
+.navbar {
+  background-color: #0B0C10;
+  font-size: 1.8rem;
+}
+
+.navbar-brand {
+  color: #45A29E;
+  font-size: inherit;
+}
+
+.navbar-brand img {
+  width: 44px;
+  height: 40px;
+  margin-bottom: 6px;
+}
+
+.listco-logo {
+  background-image: url('./assets/icons/checklist.svg');
+}
+
+/* ------- BUTTONS ------- */
+
+.listco-btn {
+  color: #ffffff;
+  margin-right: 30px;
+  font-size: 1.4rem;
+  border-radius: 50px;
+  border-bottom: none !important;
+}
+
+.listco-btn:hover {
+  transform: scale(1.125);
+  color: #ffffff;
+}
+
+.listco-btn img {
+  margin-bottom: 2px;
+}
+
+.new-list-button {
+  background-color: #45A29E;
+}
+
+.open-list-button {
+  background-color: #C5C6C7;
+}
+
+.github-icon img {
+  width: 33px;
+  height: 33px;
+}
+
+.github-icon:hover {
+  transform: scale(1.25);
+}
+
+
