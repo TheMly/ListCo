@@ -1,17 +1,40 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
 
-.topnav a:hover {
-  border-bottom: 3px solid red;
-}
-
 /* ------- GENERAL ------- */
 body {
   font-family: 'Quicksand';
   background-color: #1F2833;
+  color: #ffffff;
 }
 
-/* ------- NAVBAR ------- */
+.wrapper
+{
+  padding-bottom: 40px;
+}
+
+.divider
+{
+  position: relative;
+  margin-top: 90px;
+  height: 3px;
+}
+
+.div-transparent:before
+{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  width: 90%;
+  height: 3px;
+  background-image: linear-gradient(to right, transparent, #45A29E, transparent);
+}
+
+/* ------- HEADER ------- */
+
+/* || ------- NAVBAR ------- */
 .navbar {
   background-color: #0B0C10;
   font-size: 1.8rem;
@@ -32,30 +55,29 @@ body {
   background-image: url('./assets/icons/checklist.svg');
 }
 
-/* ------- BUTTONS ------- */
+/* || ------- BUTTONS ------- */
 
-.listco-btn {
+.listco-btn-hdr {
   color: #ffffff;
-  margin-right: 30px;
-  font-size: 1.4rem;
+  margin-right: 25px;
+  font-size: 1.2rem;
   border-radius: 50px;
-  border-bottom: none !important;
 }
 
-.listco-btn:hover {
+.listco-btn-hdr:hover {
   transform: scale(1.125);
   color: #ffffff;
 }
 
-.listco-btn img {
+.listco-btn-hdr img {
   margin-bottom: 2px;
 }
 
-.new-list-button {
+.new-list-button-hdr {
   background-color: #45A29E;
 }
 
-.open-list-button {
+.open-list-button-hdr {
   background-color: #C5C6C7;
 }
 
@@ -66,6 +88,46 @@ body {
 
 .github-icon:hover {
   transform: scale(1.25);
+}
+
+/* ------- HOME ------- */
+.home-container {
+  background-color: inherit;
+}
+
+.button-group-home {
+  margin-top: 35px;
+}
+
+.listco-btn-home {
+  color: #ffffff;
+  font-size: 1.8rem;
+  border-radius: 50px;
+  margin: 20px;
+}
+
+.listco-btn-home:hover {
+  transform: scale(1.125);
+  color: #ffffff;
+}
+
+.new-list-button-home {
+  background-color: #45A29E;
+}
+
+.open-list-button-home {
+  background-color: #C5C6C7;
+}
+
+.home-img {
+  width: 170px;
+  height: 170px;
+  margin-top: 30px;
+}
+
+.home-img-text {
+  text-align: justify;
+  font-size: 18px
 }
 
 
