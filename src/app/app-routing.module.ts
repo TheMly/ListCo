@@ -6,7 +6,8 @@ import {HomeComponent} from './home/home.component';
 const routes: Routes = [{
   path: '',
   component: HomeComponent,
-}];
+},
+  { path: 'list', loadChildren: () => import('./list/list.module').then(m => m.ListModule) }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -55,6 +55,11 @@ body {
   background-image: url('./assets/icons/checklist.svg');
 }
 
+.logo-header:hover {
+  text-decoration: none;
+  color: #45A29E
+}
+
 /* || ------- BUTTONS ------- */
 
 .listco-btn-hdr {

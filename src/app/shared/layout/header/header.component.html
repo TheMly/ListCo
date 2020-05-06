@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand logo-header" href="#">
     <img id="nav-logo" src="assets/icons/checklist.svg">
     LIST<span style='color: #ffffff'>CO</span>
   </a>
@@ -10,7 +10,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto topnav">
       <li class="nav-item">
-        <a class="btn listco-btn-hdr new-list-button-hdr" type="button" href="#">New
+        <a routerLink="/list" class="btn listco-btn-hdr new-list-button-hdr" type="button" href="#">New
           <img id="new-button-svg" src="assets/icons/plus-circle.svg">
         </a>
       </li>
@@ -27,3 +27,4 @@
     </ul>
   </div>
 </nav>
+<router-outlet></router-outlet>
