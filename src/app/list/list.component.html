@@ -1,1 +1,24 @@
-<p>list works!</p>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-12 p-0">
+      <div class="home-container jumbotron text-center m-0 d-flex flex-column">
+        <h2>My List</h2>
+        <h4>List ID: 12345</h4>
+        <div class="button-group-home">
+          <a routerLink="/list" class="btn listco-btn green-btn" type="button" href="#">Edit Name
+          </a>
+          <a class="btn listco-btn grey-btn" type="button" href="#">Copy URL
+          </a>
+        </div>
+
+        <div *ngFor="let todo of todoList">
+          <listco-list-item [todo]=todo (remove)="removeTodo($event)" (toggleComplete)="toggleComplete($event)"></listco-list-item>
+        </div>
+
+        <div class="button-group-home">
+          <a class="btn listco-btn grey-btn" type="button" (click)="createTodo()">New Item</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

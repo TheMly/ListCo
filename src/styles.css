@@ -95,6 +95,7 @@ body {
   transform: scale(1.25);
 }
 
+
 /* ------- HOME ------- */
 .home-container {
   background-color: inherit;
@@ -102,26 +103,6 @@ body {
 
 .button-group-home {
   margin-top: 35px;
-}
-
-.listco-btn-home {
-  color: #ffffff;
-  font-size: 1.8rem;
-  border-radius: 50px;
-  margin: 20px;
-}
-
-.listco-btn-home:hover {
-  transform: scale(1.125);
-  color: #ffffff;
-}
-
-.new-list-button-home {
-  background-color: #45A29E;
-}
-
-.open-list-button-home {
-  background-color: #C5C6C7;
 }
 
 .home-img {
@@ -136,3 +117,74 @@ body {
 }
 
 
+/* ------- LIST ------- */
+
+.listco-list-item {
+  align-items: center;
+  padding: 10px;
+  /*border-bottom: 1px solid #C5C6C7;*/
+  transition: background-color 0.2s;
+}
+
+.drag-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 2px;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+.icon-button:focus {
+  border: none;
+  outline: none;
+}
+
+.icon-button img {}
+
+.checked-unchecked-img {
+  width: 24px;
+  height: 24px;
+  margin-left: 2px;
+  margin-right: 2px;}
+
+.remove-img {
+  width: 17px;
+  height: 17px;
+  margin-left: 10px;
+}
+
+input.input-list-item, textarea {
+  background-color: inherit;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: white;
+  width: 24rem;
+}
+
+/* ------- GENERAL ------- */
+
+.listco-btn {
+  color: #ffffff;
+  font-size: 1.7rem;
+  border-radius: 50px;
+  margin: 20px;
+}
+
+.listco-btn:hover {
+  transform: scale(1.125);
+  color: #ffffff;
+}
+
+.green-btn {
+  background-color: #45A29E;
+}
+
+.grey-btn {
+  background-color: #C5C6C7;
+}

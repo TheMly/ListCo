@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { ListRoutingModule } from './list-routing.module';
 import { ListComponent } from './list.component';
+import {ListItemComponent} from '../list-item/list-item.component';
 
 
 @NgModule({
-  declarations: [ListComponent],
-  imports: [
-    CommonModule,
-    ListRoutingModule
-  ]
+  declarations: [ListComponent, ListItemComponent],
+    imports: [
+        CommonModule,
+        ListRoutingModule
+    ]
 })
 export class ListModule { }
