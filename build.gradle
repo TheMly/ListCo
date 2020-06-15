@@ -1,0 +1,16 @@
+subprojects {
+    apply plugin: "java"
+}
+
+project(":listco-server") {
+    dependencies {
+        implementation(project(":listco-client"))
+    }
+    build.dependsOn ":listco-client:build"
+}
+
+project(":listco-client") {
+    jar {
+        from "dist/listco-client" into "static"
+    }
+}
