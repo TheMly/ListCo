@@ -4,13 +4,13 @@
     <img class="drag-img drag-handle" src="./assets/icons/list-item-handle.svg" alt="Handle">
   </button>
 
-  <button class="icon-button" tabindex="-1" (click)="toggleCompletedTodo(todo)">
+  <button class="icon-button" tabindex="-1" (click)="toggleCompletedTodo(todoItem)">
     <img class="checked-unchecked-img" src="{{toggleCompletedImgSrc}}" alt="Check">
   </button>
 
   <input class="input-list-item" type="text" value="">
 
-  <button class="icon-button" tabindex="-1" (click)="removeTodo(todo)">
+  <button class="icon-button" tabindex="-1" (click)="removeTodo(todoItem)">
     <img class="remove-img" src="/assets/icons/remove.svg" alt="Remove">
   </button>
 </div>

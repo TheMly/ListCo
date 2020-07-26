@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Todo} from '../shared/model/Todo';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {TodoItem} from '../shared/model/TodoItem';
 
 @Component({
   selector: 'listco-list-item',
@@ -8,11 +8,11 @@ import {Todo} from '../shared/model/Todo';
 })
 export class ListItemComponent implements OnInit {
 
-  @Input() todo: Todo;
+  @Input() todoItem: TodoItem;
 
-  @Output() remove: EventEmitter<Todo> = new EventEmitter();
+  @Output() remove: EventEmitter<TodoItem> = new EventEmitter();
 
-  @Output() toggleComplete: EventEmitter<Todo> = new EventEmitter();
+  @Output() toggleComplete: EventEmitter<TodoItem> = new EventEmitter();
 
   toggleCompletedImgSrc = '';
 
@@ -20,20 +20,20 @@ export class ListItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadTodoCompletedToggleImg(this.todo);
+    this.loadTodoCompletedToggleImg(this.todoItem);
   }
 
-  removeTodo(todo: Todo) {
+  removeTodo(todo: TodoItem) {
     this.remove.emit(todo);
   }
 
-  toggleCompletedTodo(todo: Todo) {
+  toggleCompletedTodo(todo: TodoItem) {
     todo.completed = !todo.completed;
     this.loadTodoCompletedToggleImg(todo);
     this.toggleComplete.emit(todo);
   }
 
-  loadTodoCompletedToggleImg(todo: Todo): void {
+  loadTodoCompletedToggleImg(todo: TodoItem): void {
     if (todo.completed) {
       this.toggleCompletedImgSrc = '/assets/icons/checked.svg';
     } else {

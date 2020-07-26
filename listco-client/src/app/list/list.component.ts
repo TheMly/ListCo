@@ -1,6 +1,9 @@
-import {ChangeDetectorRef, Component, NgZone, OnInit} from '@angular/core';
-import {Todo} from '../shared/model/Todo';
+import {Component, OnInit} from '@angular/core';
 import {DataService} from '../shared/service/data.service';
+import {TodoList} from '../shared/model/TodoList';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {TodoItem} from '../shared/model/TodoItem';
 
 @Component({
   selector: 'listco-list',
@@ -9,28 +12,42 @@ import {DataService} from '../shared/service/data.service';
 })
 export class ListComponent implements OnInit {
 
-  todoList: Todo[] = [new Todo({id: 1, completed: false}), new Todo({id: 2, completed: false})];
+  todoItems: TodoItem[] = [new TodoItem({id: 1, completed: false}), new TodoItem({id: 2, completed: false})];
 
-  constructor(private dataService: DataService) {
+  todoList: TodoList;
+
+  constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.getTodoList().subscribe(todoList => this.todoList = todoList);
+    console.log(this.todoList);
+  }
+
+  getTodoList(): Observable<TodoList> {
+    const newListInd = this.route.snapshot.data.newList;
+    const listId = 3; // TODO It's hardcoded for now. When the other flux is developed
+    // this will be replaced by the list id that comes fromthe routing.
+    return this.dataService.getTodoList(newListInd, listId);
   }
 
   createTodo(): void {
     this.dataService.createTodo()
-      .subscribe(createdTodo => this.todoList.push(createdTodo));
+      .subscribe(createdTodo => {
+                      this.todoItems.push(createdTodo);
+                      console.log(createdTodo);
+      });
   }
 
-  removeTodo(todoToRemove: Todo): void {
+  removeTodo(todoToRemove: TodoItem): void {
     this.dataService.removeTodoById(todoToRemove.id).subscribe(
       (_) => {
-        this.todoList = this.todoList.filter((todo) => todo.id !== todoToRemove.id);
+        this.todoItems = this.todoItems.filter((todo) => todo.id !== todoToRemove.id);
       }
     );
   }
 
-  toggleComplete(todo: Todo): void {
+  toggleComplete(todo: TodoItem): void {
     this.dataService.toggleComplete(todo)
       .subscribe(updatedTodo => todo = updatedTodo);
   }

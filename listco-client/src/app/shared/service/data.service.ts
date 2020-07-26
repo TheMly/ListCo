@@ -1,19 +1,37 @@
 import { Injectable } from '@angular/core';
-import {Todo} from '../model/Todo';
 import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {TodoList} from '../model/TodoList';
+import {TodoItem} from '../model/TodoItem';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  createTodo(): Observable<Todo> {
+  rootURL = '/api';
+
+  getTodoList(newList: boolean, listId: number): Observable<TodoList> {
+    let url: string;
+    console.log(newList);
+    if (!newList) {
+      url = `${this.rootURL + '/getTodoList'}/${listId}`;
+      return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
+    } else {
+      url = this.rootURL + '/createTodoList';
+      return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
+    }
+  }
+
+  createTodo(): Observable<TodoItem> {
     // TODO Replace for API call
-    return of(
-      new Todo({id: 1, complete: false})
-  );
+  //   return of(
+  //     new Todo({id: 1, complete: false})
+  // );
+    return this.http.get<TodoItem>(this.rootURL + '/createTodoItem').pipe(map(data => data));
   }
 
   removeTodoById(todoId: number): Observable<null> {
@@ -21,10 +39,17 @@ export class DataService {
     return of(null);
   }
 
-  toggleComplete(todo: Todo): Observable<Todo> {
+  toggleComplete(todo: TodoItem): Observable<TodoItem> {
     // TODO Replace for API call
     return of(
-      new Todo({id: 1, complete: true})
+      new TodoItem({id: 1, complete: true})
+    );
+  }
+
+  updateItemText(todo: TodoItem): Observable<TodoItem> {
+    // TODO Replace for API call
+    return of(
+      new TodoItem({id: 1, complete: false})
     );
   }
 }

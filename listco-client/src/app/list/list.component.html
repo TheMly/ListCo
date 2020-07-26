@@ -11,8 +11,8 @@
           </a>
         </div>
 
-        <div *ngFor="let todo of todoList">
-          <listco-list-item [todo]=todo (remove)="removeTodo($event)" (toggleComplete)="toggleComplete($event)"></listco-list-item>
+        <div *ngFor="let todoItem of todoItems">
+          <listco-list-item [todoItem]="todoItem" (remove)="removeTodo($event)" (toggleComplete)="toggleComplete($event)"></listco-list-item>
         </div>
 
         <div class="button-group-home">

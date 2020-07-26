@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { HomeComponent } from './home/home.component';
-import { ListItemComponent } from './list-item/list-item.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +15,9 @@ import { ListItemComponent } from './list-item/list-item.component';
     HomeComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
