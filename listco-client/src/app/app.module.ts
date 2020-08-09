@@ -11,8 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    HomeComponent],
+    HeaderComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

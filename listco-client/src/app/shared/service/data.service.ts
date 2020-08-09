@@ -14,24 +14,24 @@ export class DataService {
 
   rootURL = '/api';
 
+  createNewList(newList: boolean): Observable<TodoList> {
+    let url: string;
+    console.log(newList);
+    url = this.rootURL + '/createTodoList';
+    return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
+    }
+
   getTodoList(newList: boolean, listId: number): Observable<TodoList> {
     let url: string;
     console.log(newList);
-    if (!newList) {
-      url = `${this.rootURL + '/getTodoList'}/${listId}`;
-      return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
-    } else {
-      url = this.rootURL + '/createTodoList';
-      return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
-    }
+    url = `${this.rootURL + '/getTodoList'}/${listId}`;
+    return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
   }
 
-  createTodo(): Observable<TodoItem> {
-    // TODO Replace for API call
-  //   return of(
-  //     new Todo({id: 1, complete: false})
-  // );
-    return this.http.get<TodoItem>(this.rootURL + '/createTodoItem').pipe(map(data => data));
+  createTodoItem(listId: number): Observable<TodoItem> {
+    let url: string;
+    url = `${this.rootURL + '/createTodoItem'}/${listId}`;
+    return this.http.get<TodoItem>(url).pipe(map(data => data));
   }
 
   removeTodoById(todoId: number): Observable<null> {
@@ -42,14 +42,14 @@ export class DataService {
   toggleComplete(todo: TodoItem): Observable<TodoItem> {
     // TODO Replace for API call
     return of(
-      new TodoItem({id: 1, complete: true})
+      new TodoItem()
     );
   }
 
   updateItemText(todo: TodoItem): Observable<TodoItem> {
     // TODO Replace for API call
     return of(
-      new TodoItem({id: 1, complete: false})
+      new TodoItem()
     );
   }
 }

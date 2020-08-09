@@ -12,39 +12,40 @@ import {TodoItem} from '../shared/model/TodoItem';
 })
 export class ListComponent implements OnInit {
 
-  todoItems: TodoItem[] = [new TodoItem({id: 1, completed: false}), new TodoItem({id: 2, completed: false})];
-
   todoList: TodoList;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) {
-  }
-
-  ngOnInit(): void {
-    this.getTodoList().subscribe(todoList => this.todoList = todoList);
+    const newListInd = this.route.snapshot.data.newList;
+    this.getTodoList(newListInd).subscribe(todoList => this.todoList = todoList);
     console.log(this.todoList);
   }
 
-  getTodoList(): Observable<TodoList> {
-    const newListInd = this.route.snapshot.data.newList;
+  ngOnInit(): void { }
+
+  getTodoList(newListInd: boolean): Observable<TodoList> {
     const listId = 3; // TODO It's hardcoded for now. When the other flux is developed
-    // this will be replaced by the list id that comes fromthe routing.
-    return this.dataService.getTodoList(newListInd, listId);
+    console.log('newListInd: ' + newListInd);
+    if (newListInd) {
+      return this.dataService.createNewList(newListInd);
+    } else {
+      return this.dataService.getTodoList(newListInd, listId);
+    }
   }
 
-  createTodo(): void {
-    this.dataService.createTodo()
-      .subscribe(createdTodo => {
-                      this.todoItems.push(createdTodo);
-                      console.log(createdTodo);
-      });
+  createTodoItem(): void {
+    this.dataService.createTodoItem(this.todoList.id).subscribe(t => t);
+    const newTodoItem = new TodoItem();
+    newTodoItem.listId = this.todoList.id;
+    newTodoItem.content = '';
+    newTodoItem.completed = false;
+    newTodoItem.position =  this.todoList.todoItemsList.length;
+    this.todoList.todoItemsList.push(newTodoItem);
+    console.log(newTodoItem);
   }
 
-  removeTodo(todoToRemove: TodoItem): void {
-    this.dataService.removeTodoById(todoToRemove.id).subscribe(
-      (_) => {
-        this.todoItems = this.todoItems.filter((todo) => todo.id !== todoToRemove.id);
-      }
-    );
+  removeTodo(todoItemToRemove: TodoItem): void {
+    this.dataService.removeTodoById(todoItemToRemove.position);
+    this.todoList.todoItemsList = this.todoList.todoItemsList.filter(todoItem => todoItem.position !== todoItemToRemove.position);
   }
 
   toggleComplete(todo: TodoItem): void {

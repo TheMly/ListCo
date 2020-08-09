@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 @RestController
@@ -15,20 +16,15 @@ public class TodoListController {
 
     private final TodoListService todoListService;
 
-    @GetMapping("/createTodoItem")
-    public ResponseEntity<TodoItem> createTodoItem() {
+    @GetMapping("/createTodoItem/{listId}")
+    public ResponseEntity createTodoItem(@PathVariable(value = "listId") Number listId) {
 
-        Optional<TodoItem> todoItem = todoListService.createTodoItem();
-        System.out.println(todoItem);
-        if(todoItem.isPresent()) {
-            return new ResponseEntity<>(todoItem.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        todoListService.createTodoItem(listId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/createTodoList")
-    public ResponseEntity<TodoList> createTodoList() {
+    public ResponseEntity<TodoList> createTodoList() throws SQLException {
         Optional<TodoList> todoList = todoListService.createTodoList();
         System.out.println("Created todo list: " + todoList);
         if (todoList.isPresent()) {

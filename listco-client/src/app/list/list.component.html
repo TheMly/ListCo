@@ -2,21 +2,21 @@
   <div class="row justify-content-center">
     <div class="col-12 p-0">
       <div class="home-container jumbotron text-center m-0 d-flex flex-column">
-        <h2>My List</h2>
-        <h4>List ID: 12345</h4>
+        <h2>{{ todoList.title }}</h2>
+        <h4>List ID: {{ todoList.id }}</h4>
         <div class="button-group-home">
-          <a routerLink="/list" class="btn listco-btn green-btn" type="button" href="#">Edit Name
+          <a routerLink="/new-list" class="btn listco-btn green-btn" type="button" href="#">Edit Name
           </a>
           <a class="btn listco-btn grey-btn" type="button" href="#">Copy URL
           </a>
         </div>
 
-        <div *ngFor="let todoItem of todoItems">
+        <div *ngFor="let todoItem of todoList.todoItemsList">
           <listco-list-item [todoItem]="todoItem" (remove)="removeTodo($event)" (toggleComplete)="toggleComplete($event)"></listco-list-item>
         </div>
 
         <div class="button-group-home">
-          <a class="btn listco-btn grey-btn" type="button" (click)="createTodo()">New Item</a>
+          <a class="btn listco-btn grey-btn" type="button" (click)="createTodoItem()">New Item</a>
         </div>
       </div>
     </div>
