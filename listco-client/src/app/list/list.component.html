@@ -12,7 +12,7 @@
         </div>
 
         <div *ngFor="let todoItem of todoList.todoItemsList">
-          <listco-list-item [todoItem]="todoItem" (remove)="removeTodo($event)" (toggleComplete)="toggleComplete($event)"></listco-list-item>
+          <listco-list-item [todoItem]="todoItem" (remove)="removeTodo(todoItem)" (toggleComplete)="toggleComplete($event)"></listco-list-item>
         </div>
 
         <div class="button-group-home">

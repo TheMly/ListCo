@@ -18,7 +18,7 @@ export class DataService {
     let url: string;
     console.log(newList);
     url = this.rootURL + '/createTodoList';
-    return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
+    return this.http.post<TodoList>(url, null).pipe(map(todoList => todoList));
     }
 
   getTodoList(newList: boolean, listId: number): Observable<TodoList> {
@@ -28,15 +28,16 @@ export class DataService {
     return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
   }
 
-  createTodoItem(listId: number): Observable<TodoItem> {
+  createTodoItem(todoListId: number): Observable<TodoItem> {
     let url: string;
-    url = `${this.rootURL + '/createTodoItem'}/${listId}`;
-    return this.http.get<TodoItem>(url).pipe(map(data => data));
+    url = `${this.rootURL + '/createTodoItem'}/${todoListId}`;
+    return this.http.post<TodoItem>(url, null).pipe(map(todoItem => todoItem));
   }
 
-  removeTodoById(todoId: number): Observable<null> {
-    // TODO Replace for API call
-    return of(null);
+  removeTodo(todoItemToRemoveId: number, todoListId: number): Observable<any> {
+    let url: string;
+    url = `${this.rootURL + '/removeTodoItem'}/${todoItemToRemoveId}/${todoListId}`;
+    return this.http.post(url, null);
   }
 
   toggleComplete(todo: TodoItem): Observable<TodoItem> {

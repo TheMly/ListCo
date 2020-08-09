@@ -3,9 +3,7 @@ package com.server.listco.todolist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -16,14 +14,27 @@ public class TodoListController {
 
     private final TodoListService todoListService;
 
-    @GetMapping("/createTodoItem/{listId}")
-    public ResponseEntity createTodoItem(@PathVariable(value = "listId") Number listId) {
+    @PostMapping("/createTodoItem/{todoListId}")
+    public ResponseEntity<TodoItem> createTodoItem(@PathVariable(value = "todoListId") Number todoListId) {
+        Optional<TodoItem> todoItem = todoListService.createTodoItem(todoListId);
+        if (todoItem.isPresent()) {
+            System.out.println("Created todo item with ID " + todoItem.get().getId() + " on list " + todoListId);
+            return new ResponseEntity<>(todoItem.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-        todoListService.createTodoItem(listId);
+    @PostMapping("/removeTodoItem/{todoItemToRemoveId}/{todoListId}")
+    public ResponseEntity removeTodoItem(@PathVariable(value = "todoItemToRemoveId") Number todoItemToRemoveId,
+                                         @PathVariable(value = "todoListId") Number todoListId) {
+
+        todoListService.removeTodoItem(todoItemToRemoveId, todoListId);
+        System.out.println("Removed todo item");
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/createTodoList")
+    @PostMapping("/createTodoList")
     public ResponseEntity<TodoList> createTodoList() throws SQLException {
         Optional<TodoList> todoList = todoListService.createTodoList();
         System.out.println("Created todo list: " + todoList);

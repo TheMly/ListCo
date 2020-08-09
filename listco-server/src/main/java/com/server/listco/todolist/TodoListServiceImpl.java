@@ -12,8 +12,12 @@ public class TodoListServiceImpl implements TodoListService {
 
     private final TodoListRepository todoListRepository;
 
-    public void createTodoItem(Number listId) {
-        todoListRepository.createTodoItem(listId);
+    public Optional<TodoItem> createTodoItem(Number listId) {
+        return todoListRepository.createTodoItem(listId);
+    }
+
+    public void removeTodoItem(Number todoItemToRemoveId, Number todoListId) {
+        todoListRepository.removeTodoItem(todoItemToRemoveId, todoListId);
     }
 
     public Optional<TodoList> createTodoList() throws SQLException {

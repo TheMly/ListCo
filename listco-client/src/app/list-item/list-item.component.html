@@ -8,7 +8,7 @@
     <img class="checked-unchecked-img" src="{{toggleCompletedImgSrc}}" alt="Check">
   </button>
 
-  <input class="input-list-item" type="text" value="">
+  <input (blur)="saveTodoItemContent()" class="input-list-item" type="text" value="">
 
   <button class="icon-button" tabindex="-1" (click)="removeTodo(todoItem)">
     <img class="remove-img" src="/assets/icons/remove.svg" alt="Remove">

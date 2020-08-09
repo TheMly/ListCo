@@ -5,7 +5,9 @@ import java.util.Optional;
 
 public interface TodoListRepository {
 
-    void createTodoItem(Number listId);
+    Optional<TodoItem> createTodoItem(Number listId);
+
+    void removeTodoItem(Number todoItemToRemoveId, Number todoListId);
 
     Optional<TodoList> createTodoList() throws SQLException;
 

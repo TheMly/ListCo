@@ -40,4 +40,8 @@ export class ListItemComponent implements OnInit {
       this.toggleCompletedImgSrc = '/assets/icons/unchecked.svg';
     }
   }
+
+  saveTodoItemContent(): void {
+    console.log("Unfocused input field of todo item " + this.todoItem.position);
+}
 }

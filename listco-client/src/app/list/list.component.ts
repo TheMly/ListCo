@@ -32,20 +32,16 @@ export class ListComponent implements OnInit {
     }
   }
 
-  createTodoItem(): void {
-    this.dataService.createTodoItem(this.todoList.id).subscribe(t => t);
-    const newTodoItem = new TodoItem();
-    newTodoItem.listId = this.todoList.id;
-    newTodoItem.content = '';
-    newTodoItem.completed = false;
-    newTodoItem.position =  this.todoList.todoItemsList.length;
-    this.todoList.todoItemsList.push(newTodoItem);
-    console.log(newTodoItem);
+  createTodoItem() {
+    return this.dataService
+      .createTodoItem(this.todoList.id)
+      .subscribe(createdTodoItem => this.todoList.todoItemsList.push(createdTodoItem));
   }
 
-  removeTodo(todoItemToRemove: TodoItem): void {
-    this.dataService.removeTodoById(todoItemToRemove.position);
-    this.todoList.todoItemsList = this.todoList.todoItemsList.filter(todoItem => todoItem.position !== todoItemToRemove.position);
+  removeTodo(todoItemToRemove: TodoItem) {
+    return this.dataService
+      .removeTodo(todoItemToRemove.id, this.todoList.id)
+      .subscribe(obj => this.todoList.todoItemsList = this.todoList.todoItemsList.filter(todoItem => todoItem.id !== todoItemToRemove.id ));
   }
 
   toggleComplete(todo: TodoItem): void {
