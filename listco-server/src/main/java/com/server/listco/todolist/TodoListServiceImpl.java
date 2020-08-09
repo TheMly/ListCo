@@ -20,6 +20,14 @@ public class TodoListServiceImpl implements TodoListService {
         todoListRepository.removeTodoItem(todoItemToRemoveId, todoListId);
     }
 
+    public Optional<TodoItem> updateTodoItemText(TodoItem todoItem) {
+        return todoListRepository.updateTodoItemText(todoItem);
+    }
+
+    public Optional<TodoItem> updateTodoItemCompletedStatus(TodoItem todoItem) {
+        return todoListRepository.updateTodoItemCompletedStatus(todoItem);
+    }
+
     public Optional<TodoList> createTodoList() throws SQLException {
         return todoListRepository.createTodoList();
     }

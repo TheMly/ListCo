@@ -14,7 +14,7 @@ public class TodoListController {
 
     private final TodoListService todoListService;
 
-    @PostMapping("/createTodoItem/{todoListId}")
+    @PutMapping("/createTodoItem/{todoListId}")
     public ResponseEntity<TodoItem> createTodoItem(@PathVariable(value = "todoListId") Number todoListId) {
         Optional<TodoItem> todoItem = todoListService.createTodoItem(todoListId);
         if (todoItem.isPresent()) {
@@ -34,7 +34,31 @@ public class TodoListController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/createTodoList")
+    @PostMapping("/updateTodoItemText")
+    public ResponseEntity updateTodoItemText(@RequestBody TodoItem todoItem) {
+
+        Optional<TodoItem> updatedTodoItem = todoListService.updateTodoItemText(todoItem);
+        if(updatedTodoItem.isPresent()) {
+            System.out.println("Updated text of todo item" + todoItem.getId());
+            return new ResponseEntity(updatedTodoItem.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/updateTodoItemCompletedStatus")
+    public ResponseEntity updateTodoItemCompletedStatus(@RequestBody TodoItem todoItem) {
+
+        Optional<TodoItem> updatedTodoItem = todoListService.updateTodoItemCompletedStatus(todoItem);
+        if(updatedTodoItem.isPresent()) {
+            System.out.println("Updated completed status of todo item" + todoItem.getId());
+            return new ResponseEntity(updatedTodoItem.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/createTodoList")
     public ResponseEntity<TodoList> createTodoList() throws SQLException {
         Optional<TodoList> todoList = todoListService.createTodoList();
         System.out.println("Created todo list: " + todoList);

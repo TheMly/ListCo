@@ -188,3 +188,9 @@ input.input-list-item, textarea {
 .grey-btn {
   background-color: #C5C6C7;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+

@@ -4,11 +4,11 @@
     <img class="drag-img drag-handle" src="./assets/icons/list-item-handle.svg" alt="Handle">
   </button>
 
-  <button class="icon-button" tabindex="-1" (click)="toggleCompletedTodo(todoItem)">
+  <button class="icon-button" tabindex="-1" (click)="updateTodoItemCompletedStatus(todoItem)">
     <img class="checked-unchecked-img" src="{{toggleCompletedImgSrc}}" alt="Check">
   </button>
 
-  <input (blur)="saveTodoItemContent()" class="input-list-item" type="text" value="">
+  <input (blur)="updateTodoItemText(todoItem, $event)" class="input-list-item" type="text" value="">
 
   <button class="icon-button" tabindex="-1" (click)="removeTodo(todoItem)">
     <img class="remove-img" src="/assets/icons/remove.svg" alt="Remove">

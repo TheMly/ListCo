@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+  <h3>List ID you want to open</h3>
+  <mat-form-field>
+    <mat-label>List ID</mat-label>
+    <input matInput [(ngModel)]="listIdToOpen">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">Close</button>
+  <button mat-button [mat-dialog-close]="listIdToOpen" cdkFocusInitial>Ok</button>
+</div>

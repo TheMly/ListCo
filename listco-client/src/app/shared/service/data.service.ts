@@ -12,45 +12,39 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  rootURL = '/api';
+  rootUrl = '/api';
+
+  url: string;
 
   createNewList(newList: boolean): Observable<TodoList> {
-    let url: string;
     console.log(newList);
-    url = this.rootURL + '/createTodoList';
-    return this.http.post<TodoList>(url, null).pipe(map(todoList => todoList));
+    this.url = this.rootUrl + '/createTodoList';
+    return this.http.put<TodoList>(this.url, null).pipe(map(todoList => todoList));
     }
 
   getTodoList(newList: boolean, listId: number): Observable<TodoList> {
-    let url: string;
     console.log(newList);
-    url = `${this.rootURL + '/getTodoList'}/${listId}`;
-    return this.http.get<TodoList>(url).pipe(map(todoList => todoList));
+    this.url = `${this.rootUrl + '/getTodoList'}/${listId}`;
+    return this.http.get<TodoList>(this.url).pipe(map(todoList => todoList));
   }
 
   createTodoItem(todoListId: number): Observable<TodoItem> {
-    let url: string;
-    url = `${this.rootURL + '/createTodoItem'}/${todoListId}`;
-    return this.http.post<TodoItem>(url, null).pipe(map(todoItem => todoItem));
+    this.url = `${this.rootUrl + '/createTodoItem'}/${todoListId}`;
+    return this.http.put<TodoItem>(this.url, null).pipe(map(todoItem => todoItem));
   }
 
   removeTodo(todoItemToRemoveId: number, todoListId: number): Observable<any> {
-    let url: string;
-    url = `${this.rootURL + '/removeTodoItem'}/${todoItemToRemoveId}/${todoListId}`;
-    return this.http.post(url, null);
+    this.url = `${this.rootUrl + '/removeTodoItem'}/${todoItemToRemoveId}/${todoListId}`;
+    return this.http.post(this.url, null);
   }
 
-  toggleComplete(todo: TodoItem): Observable<TodoItem> {
-    // TODO Replace for API call
-    return of(
-      new TodoItem()
-    );
+  updateTodoItemText(todoItem: TodoItem): Observable<TodoItem> {
+    this.url = `${this.rootUrl + '/updateTodoItemText'}`;
+    return this.http.post<TodoItem>(this.url, todoItem);
   }
 
-  updateItemText(todo: TodoItem): Observable<TodoItem> {
-    // TODO Replace for API call
-    return of(
-      new TodoItem()
-    );
+  updateTodoItemCompletedStatus(todoItem: TodoItem): Observable<TodoItem> {
+    this.url = `${this.rootUrl + '/updateTodoItemCompletedStatus'}`;
+    return this.http.post<TodoItem>(this.url, todoItem);
   }
 }

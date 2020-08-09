@@ -13,4 +13,9 @@ public interface TodoListService {
 
     Optional<TodoList> getTodoList(Number listId);
 
+    Optional<TodoItem> updateTodoItemText(TodoItem todoItem);
+
+    Optional<TodoItem> updateTodoItemCompletedStatus(TodoItem todoItem);
+
+
 }

@@ -26,16 +26,25 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
 
     private static final String REMOVE_TODO_ITEM_PROC = "spListCo_removeTodoItem";
 
+    private static final String UPDATE_TODO_ITEM_TEXT_PROC = "spListCo_updateTodoItemText";
+
+    private static final String UPDATE_TODO_ITEM_COMPLETED_STATUS_PROC = "spListCo_updateTodoItemCompletedStatus";
+
 
     // Constants
     private static final String CREATED_TODO_LIST = "CREATED_TODO_LIST";
 
     private static final String CREATED_TODO_ITEM = "CREATED_TODO_LIST";
 
+    private static final String UPDATED_TODO_ITEM = "UPDATED_TODO_LIST";
+
     public static final String TODO_LIST_ID = "listIdIn";
 
     public static final String TODO_ITEM_ID = "todoItemIdIn";
 
+    private static final String TODO_ITEM_TEXT = "todoItemTextIn";
+
+    private static final String TODO_ITEM_COMPLETED_STATUS = "todoItemCompletedStatusIn";
 
     public Optional<TodoItem> createTodoItem(Number listId) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
@@ -65,6 +74,50 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
         params.put(TODO_ITEM_ID, todoItemToRemoveId);
         params.put(TODO_LIST_ID, todoListId);
         jdbcCall.execute(params);
+    }
+
+    public Optional<TodoItem> updateTodoItemText(TodoItem todoItemToUpdate) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
+                .withProcedureName(UPDATE_TODO_ITEM_TEXT_PROC)
+                .declareParameters(new SqlParameter(TODO_LIST_ID, Types.INTEGER))
+                .declareParameters(new SqlParameter(TODO_ITEM_ID, Types.INTEGER))
+                .declareParameters(new SqlParameter(TODO_ITEM_TEXT, Types.VARCHAR))
+                .returningResultSet(UPDATED_TODO_ITEM, this::mapTodoItem);
+
+        Map<String, Object> params=new HashMap<>();
+        params.put(TODO_LIST_ID, todoItemToUpdate.getListId());
+        params.put(TODO_ITEM_ID, todoItemToUpdate.getId());
+        params.put(TODO_ITEM_TEXT, todoItemToUpdate.getContent());
+        Map<String, Object> out = jdbcCall.execute(params);
+        List<TodoItem> todoItemArr = (List<TodoItem>) out.get(UPDATED_TODO_ITEM);
+        if(!CollectionUtils.isEmpty(todoItemArr)) {
+            TodoItem todoItemUpdated = todoItemArr.get(0);
+            System.out.println(todoItemUpdated.toString());
+            return Optional.of(todoItemUpdated);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<TodoItem> updateTodoItemCompletedStatus(TodoItem todoItemToUpdate) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
+                .withProcedureName(UPDATE_TODO_ITEM_COMPLETED_STATUS_PROC)
+                .declareParameters(new SqlParameter(TODO_LIST_ID, Types.INTEGER))
+                .declareParameters(new SqlParameter(TODO_ITEM_ID, Types.INTEGER))
+                .declareParameters(new SqlParameter(TODO_ITEM_COMPLETED_STATUS, Types.BOOLEAN))
+                .returningResultSet(UPDATED_TODO_ITEM, this::mapTodoItem);
+
+        Map<String, Object> params=new HashMap<>();
+        params.put(TODO_LIST_ID, todoItemToUpdate.getListId());
+        params.put(TODO_ITEM_ID, todoItemToUpdate.getId());
+        params.put(TODO_ITEM_COMPLETED_STATUS, todoItemToUpdate.isCompleted());
+        Map<String, Object> out = jdbcCall.execute(params);
+        List<TodoItem> todoItemArr = (List<TodoItem>) out.get(UPDATED_TODO_ITEM);
+        if(!CollectionUtils.isEmpty(todoItemArr)) {
+            TodoItem todoItemUpdated = todoItemArr.get(0);
+            System.out.println(todoItemUpdated.toString());
+            return Optional.of(todoItemUpdated);
+        }
+        return Optional.empty();
     }
 
     public Optional<TodoList> createTodoList() {

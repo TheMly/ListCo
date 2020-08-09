@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TodoItem} from '../shared/model/TodoItem';
+import {DataService} from '../shared/service/data.service';
 
 @Component({
   selector: 'listco-list-item',
@@ -12,25 +13,17 @@ export class ListItemComponent implements OnInit {
 
   @Output() remove: EventEmitter<TodoItem> = new EventEmitter();
 
-  @Output() toggleComplete: EventEmitter<TodoItem> = new EventEmitter();
-
   toggleCompletedImgSrc = '';
 
-  constructor() {
+  constructor(private dataService: DataService) {
   }
 
   ngOnInit(): void {
     this.loadTodoCompletedToggleImg(this.todoItem);
   }
 
-  removeTodo(todo: TodoItem) {
-    this.remove.emit(todo);
-  }
-
-  toggleCompletedTodo(todo: TodoItem) {
-    todo.completed = !todo.completed;
-    this.loadTodoCompletedToggleImg(todo);
-    this.toggleComplete.emit(todo);
+  removeTodo(todoItem: TodoItem) {
+    this.remove.emit(todoItem);
   }
 
   loadTodoCompletedToggleImg(todo: TodoItem): void {
@@ -41,7 +34,16 @@ export class ListItemComponent implements OnInit {
     }
   }
 
-  saveTodoItemContent(): void {
-    console.log("Unfocused input field of todo item " + this.todoItem.position);
+  updateTodoItemText(todoItem: TodoItem, event): void {
+    console.log('Updating todo item text. Todo item: ' + this.todoItem.position);
+    todoItem.content = event.target.value;
+    this.dataService.updateTodoItemText(todoItem).subscribe(updatedTodoItem => this.todoItem = updatedTodoItem);
 }
+
+  updateTodoItemCompletedStatus(todoItem: TodoItem): void {
+    console.log('Updating todo item complete status. Todo item: ' + this.todoItem.position);
+    todoItem.completed = !todoItem.completed;
+    this.loadTodoCompletedToggleImg(todoItem);
+    this.dataService.updateTodoItemCompletedStatus(todoItem).subscribe();
+  }
 }

@@ -9,6 +9,10 @@ public interface TodoListRepository {
 
     void removeTodoItem(Number todoItemToRemoveId, Number todoListId);
 
+    Optional<TodoItem> updateTodoItemText(TodoItem todoItem);
+
+    Optional<TodoItem> updateTodoItemCompletedStatus(TodoItem todoItem);
+
     Optional<TodoList> createTodoList() throws SQLException;
 
     Optional<TodoList> getTodoList(Number listId);
