@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {OpenListDialogComponent} from './open-list-dialog.component';
+import {ApiService} from '../shared/service/api.service';
 
 @Component({
   selector: 'listco-home',
@@ -12,13 +13,13 @@ export class HomeComponent implements OnInit {
 
   listIdToOpen: number;
 
-  constructor(private router: Router, public dialog: MatDialog) { }
+  constructor(private router: Router, public dialog: MatDialog, private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
 
   goToNewList(): void {
-    this.router.navigate(['/new-list']);
+    this.apiService.createTodoList();
   }
 
   openList(): void {
@@ -29,8 +30,13 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.listIdToOpen = result;
+      this.openTodoList();
     });
 
     console.log('Open list with ID: ' + this.listIdToOpen);
+  }
+
+  openTodoList(): void {
+    // TODO
   }
 }

@@ -16,14 +16,12 @@ export class DataService {
 
   url: string;
 
-  createNewList(newList: boolean): Observable<TodoList> {
-    console.log(newList);
+  createNewList(): Observable<TodoList> {
     this.url = this.rootUrl + '/createTodoList';
     return this.http.put<TodoList>(this.url, null).pipe(map(todoList => todoList));
     }
 
-  getTodoList(newList: boolean, listId: number): Observable<TodoList> {
-    console.log(newList);
+  getTodoList(listId: number): Observable<TodoList> {
     this.url = `${this.rootUrl + '/getTodoList'}/${listId}`;
     return this.http.get<TodoList>(this.url).pipe(map(todoList => todoList));
   }

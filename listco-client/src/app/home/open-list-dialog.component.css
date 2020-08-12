@@ -1,13 +1,22 @@
 
 
-/* ------- DIALOGS ---------- */
-button.mat-button {
-  vertical-align: top ;
-  font-size: 1.25em ;
+/*!* ------- DIALOGS ---------- *!*/
+/*button.mat-button {*/
+/*  vertical-align: top ;*/
+/*  font-size: 1.25em ;*/
+/*}*/
+
+/*div.mat-dialog-actions {*/
+/*  vertical-align: top*/
+/*}*/
+
+h3 {
+  text-align: center
 }
 
-div.mat-dialog-content {
-  vertical-align: top
+div.mat-dialog-actions {
+  display: flex;
+  justify-content: center;
 }
 
 
