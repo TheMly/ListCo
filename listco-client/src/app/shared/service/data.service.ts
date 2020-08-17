@@ -21,8 +21,8 @@ export class DataService {
     return this.http.put<TodoList>(this.url, null).pipe(map(todoList => todoList));
     }
 
-  getTodoList(listId: number): Observable<TodoList> {
-    this.url = `${this.rootUrl + '/getTodoList'}/${listId}`;
+  getTodoList(todoListId: number): Observable<TodoList> {
+    this.url = `${this.rootUrl + '/getTodoList'}/${todoListId}`;
     return this.http.get<TodoList>(this.url).pipe(map(todoList => todoList));
   }
 

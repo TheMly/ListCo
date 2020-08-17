@@ -11,7 +11,7 @@ public interface TodoListService {
 
     Optional<TodoList> createTodoList() throws SQLException;
 
-    Optional<TodoList> getTodoList(Number listId);
+    Optional<TodoList> getTodoListById(Number listId);
 
     Optional<TodoItem> updateTodoItemText(TodoItem todoItem);
 

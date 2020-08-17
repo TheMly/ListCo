@@ -22,6 +22,8 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
     // Procedures
     private static final String CREATE_TODO_LIST_PROC = "spListCo_createTodoList";
 
+    private static final String GET_TODO_LIST_BY_ID_PROC = "spListCo_getTodoListById";
+
     private static final String CREATE_TODO_ITEM_PROC = "spListCo_createTodoItem";
 
     private static final String REMOVE_TODO_ITEM_PROC = "spListCo_removeTodoItem";
@@ -34,7 +36,11 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
     // Constants
     private static final String CREATED_TODO_LIST = "CREATED_TODO_LIST";
 
-    private static final String CREATED_TODO_ITEM = "CREATED_TODO_LIST";
+    private static final String CREATED_TODO_ITEM = "CREATED_TODO_ITEM";
+
+    private static final String TODO_LIST = "TODO_LIST";
+
+    private static final String TODO_ITEMS_LIST = "TODO_ITEMS_LIST";
 
     private static final String UPDATED_TODO_ITEM = "UPDATED_TODO_LIST";
 
@@ -134,8 +140,25 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
         return Optional.empty();
     }
 
-    public Optional<TodoList> getTodoList(Number listId) {
-        return Optional.of(new TodoList());
+    public Optional<TodoList> getTodoListById(Number listId) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
+                .withProcedureName(GET_TODO_LIST_BY_ID_PROC)
+                .declareParameters(new SqlParameter(TODO_LIST_ID, Types.INTEGER))
+                .returningResultSet(TODO_LIST, this::mapTodoList)
+                .returningResultSet(TODO_ITEMS_LIST, this::mapTodoItem);
+
+        Map<String, Object> params=new HashMap<>();
+        params.put(TODO_LIST_ID, listId);
+        Map<String, Object> out = jdbcCall.execute(params);
+        List<TodoList> todoListArr = (List<TodoList>) out.get(TODO_LIST);
+        List<TodoItem> todoItemsArr = (List<TodoItem>) out.get(TODO_ITEMS_LIST);
+        if(!CollectionUtils.isEmpty(todoListArr)) {
+            TodoList todoList = todoListArr.get(0);
+            todoList.setTodoItemsList(todoItemsArr);
+            System.out.println(todoList.toString());
+            return Optional.of(todoList);
+        }
+        return Optional.empty();
     }
 
     public TodoList mapTodoList(ResultSet rs, int row) throws SQLException {

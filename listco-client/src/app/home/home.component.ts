@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     this.apiService.createTodoList();
   }
 
-  openList(): void {
+  openTodoListDialog(): void {
     const dialogRef = this.dialog.open(OpenListDialogComponent, {
       width: '250px'
     });
@@ -32,11 +32,9 @@ export class HomeComponent implements OnInit {
       this.listIdToOpen = result;
       this.openTodoList();
     });
-
-    console.log('Open list with ID: ' + this.listIdToOpen);
   }
 
   openTodoList(): void {
-    // TODO
+    this.apiService.openTodoList(this.listIdToOpen);
   }
 }

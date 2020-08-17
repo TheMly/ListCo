@@ -32,8 +32,8 @@ public class TodoListServiceImpl implements TodoListService {
         return todoListRepository.createTodoList();
     }
 
-    public Optional<TodoList> getTodoList(Number listId) {
-        return todoListRepository.getTodoList(listId);
+    public Optional<TodoList> getTodoListById(Number listId) {
+        return todoListRepository.getTodoListById(listId);
     }
 
 }

@@ -69,14 +69,14 @@ public class TodoListController {
         }
     }
 
-    @GetMapping("/getTodoList")
-    public ResponseEntity<TodoList> getTodoList(@PathVariable(value = "listId") Number listId) {
-        Optional<TodoList> todoList = todoListService.getTodoList(listId);
+    @GetMapping("/getTodoList/{todoListId}")
+    public ResponseEntity<TodoList> getTodoList(@PathVariable(value = "todoListId") Number todoListId) {
+        Optional<TodoList> todoList = todoListService.getTodoListById(todoListId);
         System.out.println("Retrieved todo list: " + todoList);
         if(todoList.isPresent()) {
             return new ResponseEntity<>(todoList.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 

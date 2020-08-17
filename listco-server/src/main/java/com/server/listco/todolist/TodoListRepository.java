@@ -15,6 +15,6 @@ public interface TodoListRepository {
 
     Optional<TodoList> createTodoList() throws SQLException;
 
-    Optional<TodoList> getTodoList(Number listId);
+    Optional<TodoList> getTodoListById(Number listId);
 
 }

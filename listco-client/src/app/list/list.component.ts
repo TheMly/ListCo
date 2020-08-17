@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {DataService} from '../shared/service/data.service';
 import {TodoList} from '../shared/model/TodoList';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
 import {TodoItem} from '../shared/model/TodoItem';
 
 @Component({
