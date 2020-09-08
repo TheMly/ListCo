@@ -15,8 +15,14 @@ import {
 import { Observable, throwError } from 'rxjs';
 
 import { retry, catchError } from 'rxjs/operators';
+import {ErrorHandlerService} from '../service/error-handler.service';
+import {Injectable} from '@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class HttpErrorInterceptor implements HttpInterceptor {
+
+  constructor(private errorHandler: ErrorHandlerService) {
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -44,7 +50,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
           }
 
-          window.alert(errorMessage);
+          this.errorHandler.handleError(error);
+
+          // window.alert(errorMessage);
 
           return throwError(errorMessage);
         })

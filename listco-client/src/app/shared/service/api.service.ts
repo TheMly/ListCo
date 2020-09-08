@@ -14,17 +14,18 @@ export class ApiService {
   createTodoList(): void {
     this.dataService.createNewList()
       .subscribe(
-        createdTodoList =>  this.router.navigate(['/todo-list', createdTodoList.id], {
-      state: { todoListArg: createdTodoList}
-    }));
-
+        createdTodoList =>  { this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+                                    this.router.navigate(['/todo-list', createdTodoList.id], {
+                                   state: { todoListArg: createdTodoList}}));
+    });
   }
 
   openTodoList(listId: number): void {
     this.dataService.getTodoList(listId)
       .subscribe(
-      openedTodoList => this.router.navigate(['/todo-list', openedTodoList.id], {
-      state: { todoListArg: openedTodoList}
-    }));
+      openedTodoList => { this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+                                this.router.navigate(['/todo-list', openedTodoList.id], {
+                                state: { todoListArg: openedTodoList}}));
+      });
   }
 }

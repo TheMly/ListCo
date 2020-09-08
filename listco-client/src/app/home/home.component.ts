@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   listIdToOpen: number;
 
-  constructor(private router: Router, public dialog: MatDialog, private apiService: ApiService) { }
+  constructor(public dialog: MatDialog, private apiService: ApiService) { }
 
   ngOnInit(): void {
   }

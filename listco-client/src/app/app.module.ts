@@ -9,6 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpErrorInterceptor} from './shared/interceptor/HttpErrorInterceptor';
+import {ErrorHandlerService} from './shared/service/error-handler.service';
+import {InformationDialogComponent} from './shared/dialog/information/information-dialog.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -16,15 +19,19 @@ import {HttpErrorInterceptor} from './shared/interceptor/HttpErrorInterceptor';
     HttpClientModule,
     AppRoutingModule,
     MatDialogModule,
+    MatButtonModule,
     BrowserAnimationsModule,
     BrowserModule,
     ReactiveFormsModule],
   declarations: [
     AppComponent,
-    HeaderComponent],
+    HeaderComponent,
+    InformationDialogComponent,
+    ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true, direction: 'ltr'}},
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    ErrorHandlerService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,7 @@
 package com.server.listco.todolist;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
@@ -14,10 +14,10 @@ import java.sql.Types;
 import java.util.*;
 
 @Repository
+@RequiredArgsConstructor
 public class TodoListRepositoryJdbcImpl implements TodoListRepository {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     // Procedures
     private static final String CREATE_TODO_LIST_PROC = "spListCo_createTodoList";

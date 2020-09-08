@@ -15,6 +15,5 @@ export class OpenListDialogComponent {
   onCloseClick(): void {
      this.dialogRef.close();
   }
-
 }
 
