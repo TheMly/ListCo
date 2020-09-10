@@ -9,6 +9,13 @@
           <a class="btn listco-btn grey-btn" type="button" (click)="openTodoListDialog()">Open List
           </a>
         </div>
+        <br><br>
+        <div *ngIf="recentLists">
+          <h2>Recently opened lists</h2>
+            <div *ngFor="let recentList of recentLists">
+              <h4 (click)="openTodoList(recentList.id)">{{ recentList.title }} - {{ recentList.id }} - {{ recentList.creationDate}}</h4>
+            </div>
+        </div>
       </div>
 
       <div class="wrapper">

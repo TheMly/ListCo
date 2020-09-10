@@ -1,6 +1,7 @@
 package com.server.listco.todolist;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public interface TodoListRepository {
@@ -13,8 +14,10 @@ public interface TodoListRepository {
 
     Optional<TodoItem> updateTodoItemCompletedStatus(TodoItem todoItem);
 
-    Optional<TodoList> createTodoList() throws SQLException;
+    Optional<TodoList> createTodoList(String uerFp) throws SQLException;
 
     Optional<TodoList> getTodoListById(Number listId);
+
+    Optional<List<TodoList>> loadRecentLists(String userFp);
 
 }

@@ -16,8 +16,9 @@ export class DataService {
 
   url: string;
 
-  createNewList(): Observable<TodoList> {
-    this.url = this.rootUrl + '/createTodoList';
+  createNewList(userFp: string): Observable<TodoList> {
+
+    this.url = `${this.rootUrl + '/createTodoList'}/${userFp}`;
     return this.http.put<TodoList>(this.url, null).pipe(map(todoList => todoList));
     }
 
@@ -44,5 +45,10 @@ export class DataService {
   updateTodoItemCompletedStatus(todoItem: TodoItem): Observable<TodoItem> {
     this.url = `${this.rootUrl + '/updateTodoItemCompletedStatus'}`;
     return this.http.post<TodoItem>(this.url, todoItem);
+  }
+
+  loadRecentLists(userFp: string): Observable<TodoList[]> {
+    this.url = `${this.rootUrl + '/loadRecentLists'}/${userFp}`;
+    return this.http.get<TodoList[]>(this.url);
   }
 }

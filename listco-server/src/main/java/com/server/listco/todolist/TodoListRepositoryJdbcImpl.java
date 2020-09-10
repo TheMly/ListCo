@@ -32,6 +32,7 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
 
     private static final String UPDATE_TODO_ITEM_COMPLETED_STATUS_PROC = "spListCo_updateTodoItemCompletedStatus";
 
+    private static final String GET_RECENT_LISTS = "spListCo_getRecentLists";
 
     // Constants
     private static final String CREATED_TODO_LIST = "CREATED_TODO_LIST";
@@ -51,6 +52,9 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
     private static final String TODO_ITEM_TEXT = "todoItemTextIn";
 
     private static final String TODO_ITEM_COMPLETED_STATUS = "todoItemCompletedStatusIn";
+
+    public static final String USER_FP = "userFpIn";
+
 
     public Optional<TodoItem> createTodoItem(Number listId) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
@@ -126,11 +130,15 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
         return Optional.empty();
     }
 
-    public Optional<TodoList> createTodoList() {
+    public Optional<TodoList> createTodoList(String userFp) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
                 .withProcedureName(CREATE_TODO_LIST_PROC)
+                .declareParameters(new SqlParameter(USER_FP, Types.VARCHAR))
                 .returningResultSet(CREATED_TODO_LIST, this::mapTodoList);
-        Map<String, Object> out = jdbcCall.execute();
+
+        Map<String, Object> params=new HashMap<>();
+        params.put(USER_FP, userFp);
+        Map<String, Object> out = jdbcCall.execute(params);
         List<TodoList> todoListArr = (List<TodoList>) out.get(CREATED_TODO_LIST);
         if(!CollectionUtils.isEmpty(todoListArr)) {
             TodoList todoList = todoListArr.get(0);
@@ -159,6 +167,23 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
             return Optional.of(todoList);
         }
         return Optional.empty();
+    }
+
+    public Optional<List<TodoList>> loadRecentLists(String userFp) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
+                .withProcedureName(GET_RECENT_LISTS)
+                .declareParameters(new SqlParameter(USER_FP, Types.VARCHAR))
+                .returningResultSet(TODO_LIST, this::mapTodoList);
+
+        Map<String, Object> params=new HashMap<>();
+        params.put(USER_FP, userFp);
+        Map<String, Object> out = jdbcCall.execute(params);
+        List<TodoList> todoListArr = (List<TodoList>) out.get(TODO_LIST);
+        if(!CollectionUtils.isEmpty(todoListArr)) {
+            return Optional.of(todoListArr);
+        }
+        return Optional.empty();
+
     }
 
     public TodoList mapTodoList(ResultSet rs, int row) throws SQLException {

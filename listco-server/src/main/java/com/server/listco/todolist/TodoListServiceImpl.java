@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,12 +29,16 @@ public class TodoListServiceImpl implements TodoListService {
         return todoListRepository.updateTodoItemCompletedStatus(todoItem);
     }
 
-    public Optional<TodoList> createTodoList() throws SQLException {
-        return todoListRepository.createTodoList();
+    public Optional<TodoList> createTodoList(String userFp) throws SQLException {
+        return todoListRepository.createTodoList(userFp);
     }
 
     public Optional<TodoList> getTodoListById(Number listId) {
         return todoListRepository.getTodoListById(listId);
+    }
+
+    public Optional<List<TodoList>> loadRecentLists(String userFp) {
+        return todoListRepository.loadRecentLists(userFp);
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -58,9 +59,9 @@ public class TodoListController {
         }
     }
 
-    @PutMapping("/createTodoList")
-    public ResponseEntity<TodoList> createTodoList() throws SQLException {
-        Optional<TodoList> todoList = todoListService.createTodoList();
+    @PutMapping("/createTodoList/{userFp}")
+    public ResponseEntity<TodoList> createTodoList(@PathVariable(value = "userFp") String userFp) throws SQLException {
+        Optional<TodoList> todoList = todoListService.createTodoList(userFp);
         System.out.println("Created todo list: " + todoList);
         if (todoList.isPresent()) {
             return new ResponseEntity<>(todoList.get(), HttpStatus.OK);
@@ -75,6 +76,17 @@ public class TodoListController {
         System.out.println("Retrieved todo list: " + todoList);
         if(todoList.isPresent()) {
             return new ResponseEntity<>(todoList.get(), HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/loadRecentLists/{userFp}")
+    public ResponseEntity<TodoList> loadRecentLists(@PathVariable(value = "userFp") String userFp) {
+        System.out.println("User fingerprint is: " + userFp);
+        Optional<List<TodoList>> todoListArr = todoListService.loadRecentLists(userFp);
+        if(todoListArr.isPresent()) {
+            return new ResponseEntity(todoListArr.get(), HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
         }
