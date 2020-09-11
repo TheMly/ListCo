@@ -20,5 +20,7 @@ public interface TodoListService {
 
     Optional<List<TodoList>> loadRecentLists(String userFp);
 
+    void removeRecentList(Number recentListId, String userFp);
+
 
 }

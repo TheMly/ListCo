@@ -15,9 +15,7 @@ export class HomeComponent implements OnInit {
   recentLists: TodoList[];
   userFp: string;
 
-  constructor(public dialog: MatDialog, private apiService: ApiService, private ref: ChangeDetectorRef) {
-
-  }
+  constructor(public dialog: MatDialog, private apiService: ApiService, private ref: ChangeDetectorRef) {}
 
   ngOnInit(): void {
       Fingerprint2.get(((components) => {
@@ -26,13 +24,21 @@ export class HomeComponent implements OnInit {
         console.log(userFp);
         this.userFp = userFp;
         this.apiService.loadRecentLists(userFp)
-          .subscribe(result => { this.recentLists = result;
+          .subscribe(result => {
+                                 const sortedLists = this.sortListsByMostRecentFirst(result);
+                                 this.recentLists = sortedLists.slice(0, 5);
                                  console.log(this.recentLists);
                                  this.ref.detectChanges();
           });
       }));
 
   }
+
+  sortListsByMostRecentFirst(todoListArr: TodoList[]) {
+    return todoListArr.sort((a, b) => {
+      return new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime();
+    });
+}
 
   goToNewList(): void {
     console.log(this.userFp);
@@ -53,4 +59,12 @@ export class HomeComponent implements OnInit {
   openTodoList(listIdToOpen): void {
       this.apiService.openTodoList(listIdToOpen);
     }
+
+  removeRecentList(recentListId: number) {
+      this.apiService.removeRecentList(recentListId, this.userFp)
+        .subscribe(() => {
+          this.recentLists = this.recentLists.filter(list => list.id !== recentListId);
+          this.ref.detectChanges();
+        });
   }
+}

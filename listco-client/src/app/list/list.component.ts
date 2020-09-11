@@ -30,6 +30,6 @@ export class ListComponent implements OnInit {
   removeTodo(todoItemToRemove: TodoItem) {
     return this.dataService
       .removeTodo(todoItemToRemove.id, this.todoList.id)
-      .subscribe(obj => this.todoList.todoItemsList = this.todoList.todoItemsList.filter(todoItem => todoItem.id !== todoItemToRemove.id ));
+      .subscribe(() => this.todoList.todoItemsList = this.todoList.todoItemsList.filter(todoItem => todoItem.id !== todoItemToRemove.id ));
   }
 }

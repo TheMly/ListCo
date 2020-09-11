@@ -34,6 +34,8 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
 
     private static final String GET_RECENT_LISTS = "spListCo_getRecentLists";
 
+    private static final String REMOVE_RECENT_LIST_PROC = "spListCo_removeRecentList";
+
     // Constants
     private static final String CREATED_TODO_LIST = "CREATED_TODO_LIST";
 
@@ -183,7 +185,18 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
             return Optional.of(todoListArr);
         }
         return Optional.empty();
+    }
 
+    public void removeRecentList(Number recentListId, String userFp) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
+                .withProcedureName(REMOVE_RECENT_LIST_PROC)
+                .declareParameters(new SqlParameter(TODO_ITEM_ID, Types.INTEGER))
+                .declareParameters(new SqlParameter(TODO_LIST_ID, Types.VARCHAR));
+
+        Map<String, Object> params=new HashMap<>();
+        params.put(TODO_LIST_ID, recentListId);
+        params.put(USER_FP, userFp);
+        jdbcCall.execute(params);
     }
 
     public TodoList mapTodoList(ResultSet rs, int row) throws SQLException {

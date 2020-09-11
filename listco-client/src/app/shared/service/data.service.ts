@@ -51,4 +51,9 @@ export class DataService {
     this.url = `${this.rootUrl + '/loadRecentLists'}/${userFp}`;
     return this.http.get<TodoList[]>(this.url);
   }
+
+  removeRecentList(recentListId: number, userFp: string): Observable<any> {
+    this.url = `${this.rootUrl + '/removeRecentList'}/${recentListId}/${userFp}`;
+    return this.http.post(this.url, null);
+  }
 }

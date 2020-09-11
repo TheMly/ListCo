@@ -4,7 +4,7 @@
       <div class="home-container jumbotron text-center m-0 d-flex flex-column">
         <h2>The easiest way to write and share lists with others</h2>
         <div class="button-group-home">
-          <a (click)="goToNewList()" class="btn listco-btn green-btn" type="button" href="#">New List
+          <a (click)="goToNewList()" class="btn listco-btn green-btn" type="button">New List
           </a>
           <a class="btn listco-btn grey-btn" type="button" (click)="openTodoListDialog()">Open List
           </a>
@@ -12,8 +12,16 @@
         <br><br>
         <div *ngIf="recentLists">
           <h2>Recently opened lists</h2>
+          <br>
             <div *ngFor="let recentList of recentLists">
-              <h4 (click)="openTodoList(recentList.id)">{{ recentList.title }} - {{ recentList.id }} - {{ recentList.creationDate}}</h4>
+              <h4 class="recent-list">{{ recentList.title }}  -  {{ recentList.creationDate | date: 'shortDate'}}
+                <button class="open-list-button-recent-list" (click)="openTodoList(recentList.id)" tabindex="-1">
+                  <img class="open-list-img-recent-list" src="assets/icons/open-icon.svg" alt="Open">
+                </button>
+                <button class="remove-button-recent-list" (click)="removeRecentList(recentList.id)" tabindex="-1">
+                <img class="remove-img-recent-list" src="/assets/icons/remove.svg" alt="Remove">
+                </button>
+              </h4>
             </div>
         </div>
       </div>

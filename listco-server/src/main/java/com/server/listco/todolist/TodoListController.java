@@ -92,4 +92,13 @@ public class TodoListController {
         }
     }
 
+    @PostMapping("/removeRecentList/{recentListId}/{userFp}")
+    public ResponseEntity removeRecentList(@PathVariable(value = "recentListId") Number recentListId,
+                                         @PathVariable(value = "userFp") String userFp) {
+
+        todoListService.removeRecentList(recentListId, userFp);
+        System.out.println("Removed recent list");
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }

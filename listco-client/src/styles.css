@@ -32,6 +32,30 @@ body {
   background-image: linear-gradient(to right, transparent, #45A29E, transparent);
 }
 
+.listco-btn {
+  color: #ffffff;
+  font-size: 1.7rem;
+  border-radius: 50px;
+  margin: 20px;
+}
+
+.listco-btn:hover {
+  transform: scale(1.125);
+  color: #ffffff;
+}
+
+.green-btn {
+  background-color: #45A29E;
+}
+
+.grey-btn {
+  background-color: #C5C6C7;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
 /* ------- HEADER ------- */
 
 /* || ------- NAVBAR ------- */
@@ -159,6 +183,14 @@ body {
   margin-left: 10px;
 }
 
+.remove-img:hover {
+  transform: scale(1.25);
+}
+
+.open-list-img {
+  margin-left: 10px;
+}
+
 input.input-list-item, textarea {
   background-color: inherit;
   margin-left: 10px;
@@ -167,30 +199,45 @@ input.input-list-item, textarea {
   width: 24rem;
 }
 
-/* ------- GENERAL ------- */
-
-.listco-btn {
-  color: #ffffff;
-  font-size: 1.7rem;
-  border-radius: 50px;
-  margin: 20px;
+/* ------- RECENT LIST ------- */
+.recent-list {
+  padding-left: 20px !important;
 }
 
-.listco-btn:hover {
+.open-list-button-recent-list {
+  background-color: transparent;
+  padding-left: 45px;
+  border: none;
+  outline: none;
+}
+
+.open-list-button-recent-list:focus {
+  border: none;
+  outline: none;
+}
+
+.open-list-img-recent-list:hover {
   transform: scale(1.125);
-  color: #ffffff;
-}
-
-.green-btn {
   background-color: #45A29E;
 }
 
-.grey-btn {
-  background-color: #C5C6C7;
+.remove-button-recent-list {
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.remove-button-recent-list:focus {
+  border: none;
+  outline: none;
+}
 
+.remove-img-recent-list {
+  width: 17px;
+  height: 17px;
+}
 
+.remove-img-recent-list:hover {
+  transform: scale(1.25);
+}
 
