@@ -22,5 +22,7 @@ public interface TodoListService {
 
     void removeRecentList(Number recentListId, String userFp);
 
+    void updateTodoListTitle(Number todoListId, String newListTitle);
+
 
 }

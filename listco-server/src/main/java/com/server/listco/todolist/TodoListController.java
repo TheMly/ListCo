@@ -101,4 +101,12 @@ public class TodoListController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PostMapping("/updateTodoListTitle/{todoListId}")
+    public ResponseEntity updateTodoListTitle(@PathVariable(value = "todoListId") Number todoListId,
+                                              @RequestBody String newListTitle) {
+
+        todoListService.updateTodoListTitle(todoListId, newListTitle);
+        System.out.println("Updated todo list" + todoListId + " title to " + newListTitle);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

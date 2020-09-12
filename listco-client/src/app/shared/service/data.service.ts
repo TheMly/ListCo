@@ -56,4 +56,9 @@ export class DataService {
     this.url = `${this.rootUrl + '/removeRecentList'}/${recentListId}/${userFp}`;
     return this.http.post(this.url, null);
   }
+
+  updateTodoListTitle(todoListId, newListTitle): Observable<any> {
+    this.url = `${this.rootUrl + '/updateTodoListTitle'}/${todoListId}`;
+    return this.http.post(this.url, newListTitle);
+  }
 }

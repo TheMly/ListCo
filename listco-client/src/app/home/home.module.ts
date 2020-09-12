@@ -6,7 +6,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {HomeRoutingModule} from './home-routing.module';
-import {OpenListDialogComponent} from './open-list-dialog.component';
+import {OpenListDialogComponent} from './dialog/open-list-dialog.component';
 import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({

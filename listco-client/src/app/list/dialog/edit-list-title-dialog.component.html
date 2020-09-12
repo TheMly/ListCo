@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+  <h3>Insert a title for your todo list</h3>
+  <mat-form-field>
+    <mat-label>Todo List title</mat-label>
+    <input matInput [(ngModel)]="newListTitle">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="newListTitle" cdkFocusInitial>Ok</button>
+</div>

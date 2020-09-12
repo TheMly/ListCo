@@ -1,0 +1,11 @@
+h3 {
+  text-align: center
+}
+
+div.mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+}
+
+
+

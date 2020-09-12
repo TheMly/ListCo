@@ -44,4 +44,8 @@ public class TodoListServiceImpl implements TodoListService {
     public void removeRecentList(Number recentListId, String userFp) {
         todoListRepository.removeRecentList(recentListId, userFp);
     }
+
+    public void updateTodoListTitle(Number todoListId, String newListTitle) {
+        todoListRepository.updateTodoListTitle(todoListId, newListTitle);
+    }
 }

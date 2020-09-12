@@ -36,6 +36,9 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
 
     private static final String REMOVE_RECENT_LIST_PROC = "spListCo_removeRecentList";
 
+    private static final String UPDATE_LIST_TITLE_PROC = "spListCo_updateTodoListTitle";
+
+
     // Constants
     private static final String CREATED_TODO_LIST = "CREATED_TODO_LIST";
 
@@ -56,6 +59,9 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
     private static final String TODO_ITEM_COMPLETED_STATUS = "todoItemCompletedStatusIn";
 
     public static final String USER_FP = "userFpIn";
+
+    public static final String TODO_LIST_TITLE = "todoListTitleIn";
+
 
 
     public Optional<TodoItem> createTodoItem(Number listId) {
@@ -197,6 +203,19 @@ public class TodoListRepositoryJdbcImpl implements TodoListRepository {
         params.put(TODO_LIST_ID, recentListId);
         params.put(USER_FP, userFp);
         jdbcCall.execute(params);
+    }
+
+    public void updateTodoListTitle(Number todoListId, String newListTitle) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
+                .withProcedureName(UPDATE_LIST_TITLE_PROC)
+                .declareParameters(new SqlParameter(TODO_LIST_ID, Types.INTEGER))
+                .declareParameters(new SqlParameter(TODO_LIST_TITLE, Types.VARCHAR));
+
+        Map<String, Object> params=new HashMap<>();
+        params.put(TODO_LIST_ID, todoListId);
+        params.put(TODO_LIST_TITLE, newListTitle);
+        jdbcCall.execute(params);
+        System.out.println("List title updated");
     }
 
     public TodoList mapTodoList(ResultSet rs, int row) throws SQLException {

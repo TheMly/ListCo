@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../service/api.service';
-import {OpenListDialogComponent} from '../../../home/open-list-dialog.component';
+import {OpenListDialogComponent} from '../../../home/dialog/open-list-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import * as Fingerprint2 from 'fingerprintjs2';
 

@@ -3,6 +3,10 @@ import {DataService} from '../shared/service/data.service';
 import {TodoList} from '../shared/model/TodoList';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TodoItem} from '../shared/model/TodoItem';
+import {MatDialog} from '@angular/material/dialog';
+import {EditListTitleDialogComponent} from './dialog/edit-list-title-dialog.component';
+import {ApiService} from '../shared/service/api.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'listco-list',
@@ -15,8 +19,16 @@ export class ListComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
-              private router: Router) {
-    this.todoList = this.router.getCurrentNavigation().extras.state.todoListArg;
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              public dialog: MatDialog,
+              public apiService: ApiService,
+              private snackBar: MatSnackBar) {
+    if (this.router.getCurrentNavigation().extras.state) {
+      this.todoList = this.router.getCurrentNavigation().extras.state.todoListArg;
+    } else {
+      this.apiService.openTodoList(+activatedRoute.parent.snapshot.url[1].path);
+    }
   }
 
   ngOnInit(): void {}
@@ -32,4 +44,29 @@ export class ListComponent implements OnInit {
       .removeTodo(todoItemToRemove.id, this.todoList.id)
       .subscribe(() => this.todoList.todoItemsList = this.todoList.todoItemsList.filter(todoItem => todoItem.id !== todoItemToRemove.id ));
   }
-}
+
+  openEditTitleDialog() {
+    const dialogRef = this.dialog.open(EditListTitleDialogComponent, {
+      width: '275px'
+    });
+
+    dialogRef.afterClosed().subscribe(newListTitle => {
+      if (!newListTitle && newListTitle.length === 0) {
+        return;
+      }
+      return this.apiService.updateTodoListTitle(this.todoList.id, newListTitle)
+        .subscribe(() => this.todoList.title = newListTitle);
+    });
+  }
+
+    copyListUrlToClipboard() {
+      document.addEventListener('copy', (e: ClipboardEvent) => {
+        e.clipboardData.setData('text/plain', (document.location.href));
+        e.preventDefault();
+        document.removeEventListener('copy', null);
+      });
+      document.execCommand('copy');
+
+      this.snackBar.open('List URL copied to clipboard!', null, { duration: 2000 });
+    }
+  }

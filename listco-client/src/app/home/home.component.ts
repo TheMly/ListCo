@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {OpenListDialogComponent} from './open-list-dialog.component';
+import {OpenListDialogComponent} from './dialog/open-list-dialog.component';
 import {ApiService} from '../shared/service/api.service';
 import {TodoList} from '../shared/model/TodoList';
 import * as Fingerprint2 from 'fingerprintjs2';

@@ -46,4 +46,8 @@ export class ApiService {
    removeRecentList(recentListId: number, userFp: string): Observable<any> {
      return this.dataService.removeRecentList(recentListId, userFp);
    }
+
+   updateTodoListTitle(todoListId: number, newListTitle: string) {
+    return this.dataService.updateTodoListTitle(todoListId, newListTitle);
+   }
 }

@@ -14,14 +14,29 @@
           <h2>Recently opened lists</h2>
           <br>
             <div *ngFor="let recentList of recentLists">
-              <h4 class="recent-list">{{ recentList.title }}  -  {{ recentList.creationDate | date: 'shortDate'}}
-                <button class="open-list-button-recent-list" (click)="openTodoList(recentList.id)" tabindex="-1">
-                  <img class="open-list-img-recent-list" src="assets/icons/open-icon.svg" alt="Open">
-                </button>
-                <button class="remove-button-recent-list" (click)="removeRecentList(recentList.id)" tabindex="-1">
-                <img class="remove-img-recent-list" src="/assets/icons/remove.svg" alt="Remove">
-                </button>
-              </h4>
+              <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3">
+                      <h4 class="recent-list">{{ recentList.title }}  -  {{ recentList.creationDate | date: 'shortDate'}}</h4>
+                    </div>
+                    <div class="col-sm-3">
+                      <button class="open-list-button-recent-list" (click)="openTodoList(recentList.id)" tabindex="-1">
+                        <img class="open-list-img-recent-list" src="assets/icons/open-icon.svg" alt="Open">
+                      </button>
+                      <button class="remove-button-recent-list" (click)="removeRecentList(recentList.id)" tabindex="-1">
+                        <img class="remove-img-recent-list" src="/assets/icons/remove.svg" alt="Remove">
+                      </button>
+                    </div>
+                    <div class="col-sm-3"></div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-3"></div>
+              </div>
             </div>
         </div>
       </div>
