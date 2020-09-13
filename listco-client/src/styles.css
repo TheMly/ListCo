@@ -10,13 +10,13 @@ body {
 
 .wrapper
 {
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 }
 
 .divider
 {
   position: relative;
-  margin-top: 90px;
+  margin-top: 15px;
   height: 3px;
 }
 
@@ -126,7 +126,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .button-group-home {
-  margin-top: 35px;
+  margin-top: 25px;
 }
 
 .home-img {

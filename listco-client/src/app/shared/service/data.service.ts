@@ -32,7 +32,7 @@ export class DataService {
     return this.http.put<TodoItem>(this.url, null).pipe(map(todoItem => todoItem));
   }
 
-  removeTodo(todoItemToRemoveId: number, todoListId: number): Observable<any> {
+  removeTodoItem(todoItemToRemoveId: number, todoListId: number): Observable<any> {
     this.url = `${this.rootUrl + '/removeTodoItem'}/${todoItemToRemoveId}/${todoListId}`;
     return this.http.post(this.url, null);
   }

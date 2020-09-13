@@ -3,7 +3,7 @@
     <div class="col-12 p-0">
       <div class="home-container jumbotron text-center m-0 d-flex flex-column">
         <h1 class="list-title">{{ todoList.title }}</h1>
-        <h4>List ID: {{ todoList.id }}</h4>
+        <h3>List ID: <b>{{ todoList.id }}</b></h3>
         <div class="button-group-home">
           <a routerLink="/todo-list" class="btn listco-btn green-btn" type="button" (click)="openEditTitleDialog()">Edit Title
           </a>

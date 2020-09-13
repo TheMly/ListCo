@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService} from '../shared/service/data.service';
 import {TodoList} from '../shared/model/TodoList';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -7,15 +7,17 @@ import {MatDialog} from '@angular/material/dialog';
 import {EditListTitleDialogComponent} from './dialog/edit-list-title-dialog.component';
 import {ApiService} from '../shared/service/api.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'listco-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
 
   todoList: TodoList;
+  todoListSub: Subscription;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -23,7 +25,8 @@ export class ListComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               public dialog: MatDialog,
               public apiService: ApiService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private ref: ChangeDetectorRef) {
     if (this.router.getCurrentNavigation().extras.state) {
       this.todoList = this.router.getCurrentNavigation().extras.state.todoListArg;
     } else {
@@ -31,18 +34,39 @@ export class ListComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.todoListSub = this.apiService.todoListSocket.subscribe(
+      todoListUpdated => {
+    if (todoListUpdated.id === this.todoList.id) {
+      console.log('Reading from socket todo list updated');
+      this.todoList = todoListUpdated;
+      this.ref.detectChanges();
+    }
+  });
+  }
+
+  ngOnDestroy() {
+    this.todoListSub.unsubscribe();
+  }
 
   createTodoItem() {
-    return this.dataService
+    return this.apiService
       .createTodoItem(this.todoList.id)
-      .subscribe(createdTodoItem => this.todoList.todoItemsList.push(createdTodoItem));
+      .subscribe(createdTodoItem => {
+        this.todoList.todoItemsList.push(createdTodoItem);
+        this.apiService.emitTodoListUpdate(this.todoList);
+        console.log('Add todo - Event emitted');
+      });
   }
 
   removeTodo(todoItemToRemove: TodoItem) {
-    return this.dataService
-      .removeTodo(todoItemToRemove.id, this.todoList.id)
-      .subscribe(() => this.todoList.todoItemsList = this.todoList.todoItemsList.filter(todoItem => todoItem.id !== todoItemToRemove.id ));
+    return this.apiService
+      .removeTodoItem(todoItemToRemove.id, this.todoList.id)
+      .subscribe(() => {
+        this.todoList.todoItemsList = this.todoList.todoItemsList.filter(todoItem => todoItem.id !== todoItemToRemove.id);
+        this.apiService.emitTodoListUpdate(this.todoList);
+        console.log('Remove todo - Event emitted');
+      });
   }
 
   openEditTitleDialog() {
@@ -55,7 +79,10 @@ export class ListComponent implements OnInit {
         return;
       }
       return this.apiService.updateTodoListTitle(this.todoList.id, newListTitle)
-        .subscribe(() => this.todoList.title = newListTitle);
+        .subscribe(() => {
+          this.todoList.title = newListTitle;
+          this.apiService.emitTodoListUpdate(this.todoList);
+        });
     });
   }
 

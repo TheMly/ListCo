@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TodoItem} from '../shared/model/TodoItem';
 import {DataService} from '../shared/service/data.service';
+import {ApiService} from '../shared/service/api.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'listco-list-item',
@@ -14,12 +16,23 @@ export class ListItemComponent implements OnInit {
   @Output() remove: EventEmitter<TodoItem> = new EventEmitter();
 
   toggleCompletedImgSrc = '';
+  todoItemSub: Subscription;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService,
+              private apiService: ApiService) {
   }
 
   ngOnInit(): void {
     this.loadTodoCompletedToggleImg(this.todoItem);
+    this.todoItemSub = this.apiService.todoItemSocket.subscribe(
+      todoItemUpdated => {
+        if (todoItemUpdated.id === this.todoItem.id) {
+          console.log('Reading from socket todo item updated');
+          this.todoItem = todoItemUpdated;
+          this.loadTodoCompletedToggleImg(this.todoItem);
+          // this.ref.detectChanges();
+        }
+      });
   }
 
   removeTodo(todoItem: TodoItem) {
@@ -37,13 +50,17 @@ export class ListItemComponent implements OnInit {
   updateTodoItemText(todoItem: TodoItem, event): void {
     console.log('Updating todo item text. Todo item: ' + this.todoItem.position);
     todoItem.content = event.target.value;
-    this.dataService.updateTodoItemText(todoItem).subscribe(updatedTodoItem => this.todoItem = updatedTodoItem);
+    this.apiService.updateTodoItemText(todoItem).subscribe(updatedTodoItem => {
+      this.todoItem = updatedTodoItem;
+      this.apiService.emitTodoItemUpdate(this.todoItem);
+    });
 }
 
   updateTodoItemCompletedStatus(todoItem: TodoItem): void {
     console.log('Updating todo item complete status. Todo item: ' + this.todoItem.position);
-    todoItem.completed = !todoItem.completed;
+    this.todoItem.completed = !todoItem.completed;
     this.loadTodoCompletedToggleImg(todoItem);
-    this.dataService.updateTodoItemCompletedStatus(todoItem).subscribe();
+    this.apiService.updateTodoItemCompletedStatus(todoItem)
+      .subscribe(() => this.apiService.emitTodoItemUpdate(this.todoItem));
   }
 }

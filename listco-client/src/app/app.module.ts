@@ -12,6 +12,10 @@ import {HttpErrorInterceptor} from './shared/interceptor/HttpErrorInterceptor';
 import {ErrorHandlerService} from './shared/service/error-handler.service';
 import {InformationDialogComponent} from './shared/dialog/information/information-dialog.component';
 import {MatButtonModule} from '@angular/material/button';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:5555', options: {} };
+
 
 @NgModule({
   imports: [
@@ -22,7 +26,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatButtonModule,
     BrowserAnimationsModule,
     BrowserModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    SocketIoModule.forRoot(config)],
   declarations: [
     AppComponent,
     HeaderComponent,
