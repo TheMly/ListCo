@@ -13,8 +13,9 @@ import {ErrorHandlerService} from './shared/service/error-handler.service';
 import {InformationDialogComponent} from './shared/dialog/information/information-dialog.component';
 import {MatButtonModule} from '@angular/material/button';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {environment} from '../environments/environment';
 
-const config: SocketIoConfig = { url: 'http://localhost:5555', options: {} };
+const config: SocketIoConfig = { url: environment.socketServerUrl, options: {} };
 
 
 @NgModule({

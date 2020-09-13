@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class TodoListController {
 
     private final TodoListService todoListService;

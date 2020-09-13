@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  socketServerUrl: 'http://xxxxx:5555'
 };

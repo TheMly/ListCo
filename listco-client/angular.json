@@ -68,7 +68,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "listCo-angular:build:production"
+              "browserTarget": "listCo-angular:build:production",
+              "proxyConfig": "proxy.conf.prod.json"
             }
           }
         },
