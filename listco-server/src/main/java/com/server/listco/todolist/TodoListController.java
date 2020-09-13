@@ -16,6 +16,11 @@ public class TodoListController {
 
     private final TodoListService todoListService;
 
+    @GetMapping("/")
+    public String hello() {
+        return "Hello!";
+    }
+
     @PutMapping("/createTodoItem/{todoListId}")
     public ResponseEntity<TodoItem> createTodoItem(@PathVariable(value = "todoListId") Number todoListId) {
         Optional<TodoItem> todoItem = todoListService.createTodoItem(todoListId);
