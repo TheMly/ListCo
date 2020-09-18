@@ -11,15 +11,10 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@RequestMapping(value = "/api")
 public class TodoListController {
 
     private final TodoListService todoListService;
-
-    @GetMapping("/")
-    public String hello() {
-        return "Hello!";
-    }
 
     @PutMapping("/createTodoItem/{todoListId}")
     public ResponseEntity<TodoItem> createTodoItem(@PathVariable(value = "todoListId") Number todoListId) {

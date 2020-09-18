@@ -8,16 +8,18 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.12/48e4e5d60309ebd833bc528dcf77668eab3cd72c/lombok-1.18.12.jar" />
         </processorPath>
-        <module name="listCo.listco-server.main" />
+        <module name="ListCo.listco-server.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="listCo.client.main" target="11" />
       <module name="listCo.client.test" target="11" />
-      <module name="listCo.main" target="1.8" />
+      <module name="listCo.listco-client.main" target="11" />
+      <module name="listCo.listco-client.test" target="11" />
+      <module name="listCo.main" target="11" />
       <module name="listCo.server.main" target="1.8" />
       <module name="listCo.server.test" target="1.8" />
-      <module name="listCo.test" target="1.8" />
+      <module name="listCo.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

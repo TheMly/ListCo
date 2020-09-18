@@ -1,14 +1,90 @@
-plugins {
-  id "base"
-  id "com.moowork.node" version "1.3.1"
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "com.github.node-gradle:gradle-node-plugin:2.2.4"
+  }
 }
+
+apply plugin: 'com.github.node-gradle.node'
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Plugin configuration
+//------------------------------------------------------------------------------------------------------------------------
 
 node {
-  version = "10.15.3"
-  npmVersion = "6.4.1"
-  download = true
-  workDir = file("${project.buildDir}/node")
-  nodeModulesDir = file("${project.projectDir}")
+    version = "10.15.3"
+    npmVersion = "6.4.1"
+    download = true
+    workDir = file("${rootDir}/listco-client/node")
+    nodeModulesDir = file("${rootDir}/listco-client")
 }
 
-build.dependsOn npm_run_build
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Tasks - NPM
+//------------------------------------------------------------------------------------------------------------------------
+
+task clean(type: Delete) {
+  group 'build listco-client'
+  delete "${rootDir}/listco-client/dist", "${rootDir}/listco-server/src/main/resources/static"
+}
+
+task cleanNpm(type: Delete) {
+  group 'build listco-client'
+  dependsOn 'clean'
+  delete "${rootDir}/listco-client/node", "${rootDir}/listco-client/node_modules"
+}
+
+task npmUpdate {
+  group 'build listco-client'
+  dependsOn 'npm_update'
+}
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Tasks - Standalone client
+//------------------------------------------------------------------------------------------------------------------------
+
+task buildStandaloneClient(type: NpmTask, dependsOn: npmInstall) {
+  group 'build listco-client'
+  description = 'Compile listco-client side folder for development'
+  args = ['run', 'buildStandalone']
+}
+
+task serveStandaloneClientWatch(type: NpmTask, dependsOn: npmInstall) {
+  group 'build listco-client'
+  description = "Builds, serves and watches the listco-client side assets for rebuilding"
+  args = ['run', 'serveStandaloneWatch']
+}
+
+task serveStandaloneClient(type: NpmTask, dependsOn: npmInstall) {
+  group 'build listco-client'
+  description = "Compile listco-client side folder for production"
+  args = ['start']
+}
+
+task bootStandaloneClient(type: GradleBuild) {
+  group 'application'
+  setTasks(['clean', 'buildStandaloneClient', 'serveStandaloneClient'])
+//    finalizedBy 'npm_shutdown'
+}
+
+task bootStandaloneClientWatch(type: GradleBuild) {
+  group 'application'
+  setTasks(['clean', 'serveStandaloneClientWatch'])
+//    finalizedBy 'npm_shutdown'
+}
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Tasks - Integrated client
+//------------------------------------------------------------------------------------------------------------------------
+
+task buildClientToSpring(type: NpmTask, dependsOn: npmInstall) {
+  group 'build listco-client'
+  description = 'Compile listco-client side folder for development'
+  args = ['run', 'buildToSpring']
+}

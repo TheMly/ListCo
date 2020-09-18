@@ -1,1 +1,3 @@
-include "listco-client", "listco-server"
+rootProject.name = 'ListCo'
+
+include 'listco-client', 'listco-server'

@@ -1,16 +1,33 @@
-subprojects {
-    apply plugin: "java"
+group = 'com.listco'
+version = '0.0.1-SNAPSHOT'
+
+
+
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
 }
 
-project(":listco-server") {
-    dependencies {
-        implementation(project(":listco-client"))
-    }
-    build.dependsOn ":listco-client:build"
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Tasks - Application
+//------------------------------------------------------------------------------------------------------------------------
+
+task bootFullApplication(type: GradleBuild) {
+    group 'application'
+    setTasks([':listco-client:npmUpdate', ':listco-client:clean', ':listco-client:buildClientToSpring', ':listco-server:bootRun'])
 }
 
-project(":listco-client") {
-    jar {
-        from "dist/listco-client" into "static"
-    }
+//------------------------------------------------------------------------------------------------------------------------
+//    Tasks - Init project
+//------------------------------------------------------------------------------------------------------------------------
+
+wrapper {
+    group 'init'
+    gradleVersion '4.4'
+    distributionType Wrapper.DistributionType.ALL
 }
