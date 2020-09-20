@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  socketServerUrl: 'http://localhost:5555'
+  socketServerUrl: 'https://listco-socket-server.herokuapp.com:80'
 };
