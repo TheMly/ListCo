@@ -1,1 +1,1 @@
-web: gradlew bootFullApplication
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar listco-server/build/libs/listco-server.jar
