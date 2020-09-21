@@ -27,6 +27,9 @@ task buildFullApplication(type: GradleBuild) {
     setTasks([':listco-client:npmUpdate', ':listco-client:clean', ':listco-client:buildClientToSpring', ':listco-server:clean', ':listco-server:assemble'])
 }
 
+task stage(dependsOn: ['buildFullApplication'])
+
+
 //------------------------------------------------------------------------------------------------------------------------
 //    Tasks - Init project
 //------------------------------------------------------------------------------------------------------------------------
