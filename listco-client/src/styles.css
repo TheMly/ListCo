@@ -140,6 +140,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 18px
 }
 
+.info-imgs-3 {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 
 /* ------- LIST ------- */
 
