@@ -89,7 +89,7 @@ public class TodoListController {
         if(todoListArr.isPresent()) {
             return new ResponseEntity(todoListArr.get(), HttpStatus.OK);
         } else {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity(null, HttpStatus.OK);
         }
     }
 

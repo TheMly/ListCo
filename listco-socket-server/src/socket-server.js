@@ -16,6 +16,6 @@ io.on("connection", socket => {
   console.log(`Socket ${socket.id} has connected`);
 });
 
-http.listen(5555, () => {
-  console.log('Listening on port 5555');
+http.listen(8888, () => {
+  console.log('Listening on port 8888');
 });
